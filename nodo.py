@@ -7,18 +7,26 @@ class Nodo:
                 ["", "", ""]
             ]
 
+        self.__validar_tablero(tablero)
+
         self.__tablero = tablero
         self.__izquierdo = None
         self.__derecho = None
+
+    def __validar_tablero(self, tablero):
+        if not isinstance(tablero, list) or len(tablero) != 3:
+            raise ValueError("El tablero debe ser una matriz de 3x3")
+
+        for fila in tablero:
+            if not isinstance(fila, list) or len(fila) != 3:
+                raise ValueError("El tablero debe ser una matriz de 3x3")
 
     def get_tablero(self):
         return self.__tablero
 
     def set_tablero(self, tablero):
-        if len(tablero) == 3 and all(len(fila) == 3 for fila in tablero):
-            self.__tablero = tablero
-        else:
-            raise ValueError("El tablero debe ser una matriz de 3x3")
+        self.__validar_tablero(tablero)
+        self.__tablero = tablero
 
     def get_izquierdo(self):
         return self.__izquierdo
@@ -34,5 +42,5 @@ class Nodo:
 
     def mostrar_tablero(self):
         for fila in self.__tablero:
-            print(fila)
-            
+            print(" | ".join(celda if celda != "" else " " for celda in fila))
+        print()
